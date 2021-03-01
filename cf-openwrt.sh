@@ -319,7 +319,7 @@ remoteport=443
 		url=$(cat temp.txt | grep url= | cut -f 2- -d'=')
 		app=$(cat temp.txt | grep app= | cut -f 2- -d'=')
 		databasenew=$(cat temp.txt | grep database= | cut -f 2- -d'=')
-		if [ "$app" != "20201208" ]
+		if [ "$app" != "20210226" ]
 		then
 			echo 发现新版本程序: $app
 			echo 更新地址: $url
