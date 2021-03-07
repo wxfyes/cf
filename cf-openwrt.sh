@@ -392,4 +392,4 @@ done
 	echo 总计用时 $((end_seconds-start_seconds)) 秒
 	iptables -t nat -D OUTPUT $(iptables -t nat -nL OUTPUT --line-number | grep $localport | awk '{print $1}')
 	iptables -t nat -A OUTPUT -p tcp --dport $localport -j DNAT --to-destination $anycast:$remoteport
-	echo $(date +'%Y-%m-%d %H:%M:%S') IP指向 $anycast>>/root/cfnat.txt
+	echo $(date +'%Y-%m-%d %H:%M:%S') IP指向 $anycast>>/usr/dns/cfnat.txt
