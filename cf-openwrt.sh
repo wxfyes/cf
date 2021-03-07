@@ -311,9 +311,9 @@ remoteport=443
 		endtime=`date +'%Y-%m-%d %H:%M:%S'`
 		start_seconds=$(date --date="$starttime" +%s)
 		end_seconds=$(date --date="$endtime" +%s)
-		clear
-		curl --ipv4 --resolve update.freecdn.workers.dev:443:$anycast --retry 3 -s -X POST -d '"CF-IP":"'$anycast'","Speed":"'$max'"' 'https://update.freecdn.workers.dev' -o temp.txt
-		publicip=$(cat temp.txt | grep publicip= | cut -f 2- -d'=')
+		clear						
+		curl --ipv4 --resolve service.udpfile.com:443:$resolveip --retry 3 "https://service.udpfile.com?asn="$asn"&city="$city"" -o data.txt -#
+	        publicip=$(cat temp.txt | grep publicip= | cut -f 2- -d'=')
 		colo=$(cat temp.txt | grep colo= | cut -f 2- -d'=')
 		url=$(cat temp.txt | grep url= | cut -f 2- -d'=')
 		url=$(cat temp.txt | grep url= | cut -f 2- -d'=')
