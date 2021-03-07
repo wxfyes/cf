@@ -8,7 +8,7 @@ remoteport=443
 
 	declare -i bandwidth
 	declare -i speed
-	bandwidth=100
+	bandwidth=30
 	speed=bandwidth*128*1024
 	starttime=`date +'%Y-%m-%d %H:%M:%S'`
 
@@ -25,7 +25,7 @@ remoteport=443
 			if [[ ! -f "$datafile" ]]
 			then
 				echo 获取CF节点IP
-				curl --retry 3 https://service.udpfile.com/ -o data.txt -#
+				curl --retry 3 https://update.freecdn.workers.dev -o data.txt -#
 			fi
 			domain=$(cat data.txt | grep domain= | cut -f 2- -d'=')
 			file=$(cat data.txt | grep file= | cut -f 2- -d'=')
@@ -311,9 +311,9 @@ remoteport=443
 		endtime=`date +'%Y-%m-%d %H:%M:%S'`
 		start_seconds=$(date --date="$starttime" +%s)
 		end_seconds=$(date --date="$endtime" +%s)
-		clear						
-		curl --ipv4 --resolve service.udpfile.com:443:$resolveip --retry 3 "https://service.udpfile.com?asn="$asn"&city="$city"" -o data.txt -#
-	        publicip=$(cat temp.txt | grep publicip= | cut -f 2- -d'=')
+		clear
+		curl --ipv4 --resolve update.freecdn.workers.dev:443:$anycast --retry 3 -s -X POST -d '"CF-IP":"'$anycast'","Speed":"'$max'"' 'https://update.freecdn.workers.dev' -o temp.txt
+		publicip=$(cat temp.txt | grep publicip= | cut -f 2- -d'=')
 		colo=$(cat temp.txt | grep colo= | cut -f 2- -d'=')
 		url=$(cat temp.txt | grep url= | cut -f 2- -d'=')
 		url=$(cat temp.txt | grep url= | cut -f 2- -d'=')
@@ -342,4 +342,4 @@ remoteport=443
 		iptables -t nat -A OUTPUT -p tcp --dport $localport -j DNAT --to-destination $anycast:$remoteport
 		echo $(date +'%Y-%m-%d %H:%M:%S') IP指向 $anycast>>/usr/dns/cfnat.txt
                      
-                  #微信推送最新查找的IP          curl -s -o /dev/null --data "token=微信推送key&title=$anycast更新成功！&content= 优选IP $anycast 满足 $bandwidth Mbps带宽需求<br>峰值速度 $max kB/s<br>数据中心 $colo<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
+                           curl -s -o /dev/null --data "token=SCU136171T470b5cb4a82485b9704f20f955ad9b475fd9d284aaf27&title=$anycast更新成功！&content= 优选IP $anycast 满足 $bandwidth Mbps带宽需求<br>峰值速度 $max kB/s<br>数据中心 $colo<br>总计用时 $((end_seconds-start_seconds)) 秒<br>&template=html" http://pushplus.hxtrip.com/send
