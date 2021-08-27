@@ -8,7 +8,7 @@ remoteport=443
 # random cloudflare anycast ip
 declare -i bandwidth
 declare -i speed
-read -p "请设置期望到 CloudFlare 服务器的带宽大小(单位 Mbps):" bandwidth
+bandwidth=30
 speed=bandwidth*128*1024
 starttime=`date +'%Y-%m-%d %H:%M:%S'`
 while true
