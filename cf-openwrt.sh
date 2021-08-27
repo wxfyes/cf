@@ -8,7 +8,7 @@ remoteport=443
 # random cloudflare anycast ip
 declare -i bandwidth
 declare -i speed
-bandwidth=30
+read -p "请设置期望到 CloudFlare 服务器的带宽大小(单位 Mbps):" bandwidth
 speed=bandwidth*128*1024
 starttime=`date +'%Y-%m-%d %H:%M:%S'`
 while true
@@ -18,7 +18,7 @@ do
 		declare -i m
 		declare -i n
 		declare -i per
-		rm -rf icmp temp data.txt meta.txt log.txt anycast.txt temp.txt
+		rm -rf icmp temp data.txt meta.txt log.txt anycast.txt temp.txt speed.txt
 		mkdir icmp
 		while true
 		do
@@ -66,7 +66,7 @@ do
 		file=$(cat data.txt | grep file= | cut -f 2- -d'=')
 		url=$(cat data.txt | grep url= | cut -f 2- -d'=')
 		app=$(cat data.txt | grep app= | cut -f 2- -d'=')
-		if [ "$app" != "20210315" ]
+		if [ "$app" != "20210825" ]
 		then
 			echo 发现新版本程序: $app
 			echo 更新地址: $url
@@ -155,7 +155,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -191,7 +190,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -206,9 +204,9 @@ do
 			echo 峰值速度 $max kB/s
 			if [ $max1 -ge $max2 ]
 			then
-				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''20210315-$first-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''20210825-$first-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			else
-				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''20210315-$first-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$first --retry 3 -s -X POST -d ''20210825-$first-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			fi
 			echo 第一次测试 $second
 			curl --resolve $domain:443:$second https://$domain/$file -o /dev/null --connect-timeout 5 --max-time 10 > log.txt 2>&1
@@ -233,7 +231,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -269,7 +266,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -284,9 +280,9 @@ do
 			echo 峰值速度 $max kB/s
 			if [ $max1 -ge $max2 ]
 			then
-				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''20210315-$second-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''20210825-$second-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			else
-				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''20210315-$second-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$second --retry 3 -s -X POST -d ''20210825-$second-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			fi
 			echo 第一次测试 $third
 			curl --resolve $domain:443:$third https://$domain/$file -o /dev/null --connect-timeout 5 --max-time 10 > log.txt 2>&1
@@ -311,7 +307,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -347,7 +342,6 @@ do
 			max=0
 			for i in `cat speed.txt`
 			do
-				max=$i
 				if [ $i -ge $max ]; then
 					max=$i
 				fi
@@ -362,9 +356,9 @@ do
 			echo 峰值速度 $max kB/s
 			if [ $max1 -ge $max2 ]
 			then
-				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''20210315-$third-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''20210825-$third-$max1'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			else
-				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''20210315-$third-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
+				curl --ipv4 --resolve service.udpfile.com:443:$third --retry 3 -s -X POST -d ''20210825-$third-$max2'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o /dev/null --connect-timeout 5 --max-time 10
 			fi
 		fi
 	done
@@ -377,7 +371,7 @@ done
 	start_seconds=$(date --date="$starttime" +%s)
 	end_seconds=$(date --date="$endtime" +%s)
 	clear
-	curl --ipv4 --resolve service.udpfile.com:443:$anycast --retry 3 -s -X POST -d ''20210315-$anycast-$max'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o temp.txt
+	curl --ipv4 --resolve service.udpfile.com:443:$anycast --retry 3 -s -X POST -d ''20210825-$anycast-$max'' "https://service.udpfile.com?asn="$asn"&city="$city"" -o temp.txt
 	publicip=$(cat temp.txt | grep publicip= | cut -f 2- -d'=')
 	colo=$(cat temp.txt | grep colo= | cut -f 2- -d'=')
 	rm -rf temp.txt
