@@ -67,6 +67,7 @@ fallback-filter:
     - "+.awsstatic.com"
     - "+.fast.com"
     - "+.hulu.com"
+    - "+.dnsleaktest.com"
     - "+.huluim.com"
     - "+.hbogo.com"
     - "+.ipleak.net"
