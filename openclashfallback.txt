@@ -69,6 +69,10 @@ fallback-filter:
     - "+.hulu.com"
     - "+.huluim.com"
     - "+.hbogo.com"
+    - "+.ipleak.net"
+    - "+.2ip.io"
+    - "+.browserleaks.com"
+    - "+.browserleaks.org"
     - "+.whrq.net"
     - "+.whoer.net"
 #####################以上分流与域名|一下国外IP#################
